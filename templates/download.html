@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VPN 下載平台</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0d0d0d;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #e5e5e5;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 380px;
+      padding: 2.5rem 2rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .logo svg { color: #a78bfa; flex-shrink: 0; }
+
+    .logo-text {
+      font-size: .9375rem;
+      font-weight: 600;
+      color: #e5e5e5;
+      letter-spacing: -.01em;
+    }
+
+    .greeting {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.02em;
+      margin-bottom: .3rem;
+    }
+
+    .student-id {
+      font-size: .8125rem;
+      color: #4b4b4b;
+      font-family: "SF Mono", "Fira Code", monospace;
+      margin-bottom: 2rem;
+    }
+
+    .info-block {
+      background: #141414;
+      border: 1px solid #1f1f1f;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: .85rem;
+      padding: .9rem 1.1rem;
+      border-bottom: 1px solid #1f1f1f;
+    }
+
+    .info-row:last-child { border-bottom: none; }
+
+    .info-row svg { color: #4b4b4b; flex-shrink: 0; }
+
+    .info-content { min-width: 0; }
+
+    .info-label {
+      font-size: .6875rem;
+      font-weight: 500;
+      color: #4b4b4b;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: .15rem;
+    }
+
+    .info-value {
+      font-size: .875rem;
+      color: #c4c4c4;
+      font-family: "SF Mono", "Fira Code", monospace;
+    }
+
+    .info-value a {
+      color: #a78bfa;
+      text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: .8125rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      transition: color .15s;
+    }
+
+    .info-value a:hover { color: #c4b5fd; }
+
+    .btn-download {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .55rem;
+      width: 100%;
+      padding: .72rem;
+      background: #7c3aed;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: .9375rem;
+      font-weight: 600;
+      transition: background .15s, opacity .15s;
+      letter-spacing: -.01em;
+      margin-bottom: .85rem;
+    }
+
+    .btn-download:hover { background: #6d28d9; }
+    .btn-download:active { opacity: .85; }
+
+    .logout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      font-size: .8125rem;
+      color: #3d3d3d;
+      text-decoration: none;
+      transition: color .15s;
+    }
+
+    .logout:hover { color: #6b6b6b; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <span class="logo-text">VPN 下載平台</span>
+    </div>
+
+    <p class="greeting">{{ user.name }}</p>
+    <p class="student-id">{{ student_id }}</p>
+
+    <div class="info-block">
+      <div class="info-row">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+        </svg>
+        <div class="info-content">
+          <p class="info-label">設定檔</p>
+          <p class="info-value">client-{{ "%02d"|format(user.vpn_num) }}.conf</p>
+        </div>
+      </div>
+      <div class="info-row">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+        <div class="info-content">
+          <p class="info-label">WireGuard 用戶端</p>
+          <p class="info-value">
+            <a href="https://www.wireguard.com/install/" target="_blank" rel="noopener">
+              wireguard.com/install
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+              </svg>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <a class="btn-download" href="/download/config">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      下載設定檔
+    </a>
+
+    <a class="logout" href="/logout">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      登出
+    </a>
+  </div>
+</body>
+</html>
