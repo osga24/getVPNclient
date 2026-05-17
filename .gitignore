@@ -15,3 +15,5 @@ wg-clients/
 
 .claude/
 .agents/
+skills-lock.json
+uv.lock
