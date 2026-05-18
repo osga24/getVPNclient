@@ -6,6 +6,7 @@ import openpyxl
 
 XLSX = Path(__file__).parent / "vpn.xlsx"
 DB = Path(__file__).parent / "users.db"
+TA_PASSWORD = "ousu0518"
 
 
 def rebuild_db() -> int:
@@ -30,11 +31,14 @@ def rebuild_db() -> int:
     """
     )
 
-    rows = [
-        (str(r[0]).strip(), str(r[1]).strip(), int(r[2]), None)
-        for r in ws.iter_rows(min_row=3, values_only=True)
-        if r[0] and r[2] is not None
-    ]
+    rows = []
+    for r in ws.iter_rows(min_row=3, values_only=True):
+        if not r[0] or r[2] is None:
+            continue
+        student_id = str(r[0]).strip()
+        name = str(r[1]).strip() if r[1] is not None else ""
+        password = TA_PASSWORD if student_id.startswith("TA") else None
+        rows.append((student_id, name, int(r[2]), password))
     con.executemany(
         """
         INSERT INTO users (student_id, name, vpn_num, password)
