@@ -1,13 +1,22 @@
 import hmac
 import hashlib
 import sqlite3
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from init_db import rebuild_db
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    rebuild_db()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 templates = Jinja2Templates(directory="templates")
 
 BASE = Path(__file__).parent

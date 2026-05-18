@@ -4,10 +4,6 @@ __pycache__/
 .git/
 .gitignore
 users.db
-vpn.xlsx
 wg-clients/
 uv.lock
-pyproject.toml
-init_db.py
 README.md
-*.xlsx
